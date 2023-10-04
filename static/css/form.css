@@ -1,0 +1,79 @@
+.form-box {
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    padding: 40px;
+    border: 2px solid #68187c;
+    border-radius: 3px;
+}
+
+h2 {
+    align-self: center;
+}
+
+#form-login {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.titulo-form {
+    color: #096661;
+}
+
+.input-field {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+input {
+    outline: 0;
+    padding-inline: 5px;
+    padding-block: 3px;
+    background-color: transparent;
+    border: 0;
+    border-bottom: 2px solid #68187c;
+    color: #fff;
+}
+
+input:focus, textarea:focus {
+    box-shadow: none;
+    outline: 0;
+    border-color: #7c1866;
+}
+
+.btn-form {
+    min-width: 100px;
+    background-color: #a8ccb6;
+    border-color: #096661;
+    color: #096661;
+    transition: all 0.2s;
+    justify-self: center;
+}
+
+.btn-form:hover {
+    background-color: #a1cab1;
+    border-color: #064642;
+    color: #064642;
+}
+
+.btn {
+    min-width: 100px;
+    margin-top: 15px;
+    border: 2px solid #68187c;
+    color: #fff;
+}
+
+.btn:hover {
+    border: 2px solid #7c1866;
+    color: #e2e1e1;
+}
+
+.btn-cadastrar {
+    background-color: #68187c;
+}
+
+.btn-cadastrar:hover {
+    background-color: #7c1866;
+}

@@ -1,0 +1,48 @@
+{% extends 'paginas/index.html' %}
+
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+
+    {% block styles-form %}
+
+    {% endblock %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="form-container">
+                
+    <div class="form-box"> 
+        {% block titulo-form %}
+            <h2>Conect Song</h2> <br>
+        {% endblock%}
+
+        <form id="form-login" action="" method="POST">
+
+            {% csrf_token %}
+
+            {% block campos %}
+            <div class="input-field">
+                <label for="{{ form.username.id_for_label }}">Usuario</label>
+                {{ form.username }}
+            </div>
+
+            <div class="input-field">
+                <label for="{{ form.password.id_for_label }}">Senha</label>
+                {{ form.password }}
+            </div>
+
+            <button type="submit" class="btn btn-login">Login</button>
+            {% endblock%}
+        </form>
+        {% block cadastrar %}
+            <hr>
+            <a class="btn btn-cadastrar" href="{% url 'cadastrar-usuario' %}">Cadastrar</a>
+        {% endblock %}
+    </div>
+</div>
+
+{% endblock %}
