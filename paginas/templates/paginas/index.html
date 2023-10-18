@@ -26,12 +26,45 @@
 
     {% block head %}
     <header>
-        <nav>
-            <nav class="navbar navbar-expand-lg bg-body-tertiary">
-                <div class="container-fluid">
-
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid container-header">
+                <!-- <div id="box-header">
+                    <div id="menu-lateral">
+                        <i class="fa-solid fa-bars"></i>
+                    </div>
+                    <div id="logo">
+                        <img src="{% static 'img/ConectSong.png' %}" alt=""> <h2 id="logo-text">Conect Song</h2>
+                    </div>
+                </div> -->
+                <div id="logo">
+                    <img src="{% static 'img/ConectSong.png' %}" alt=""> <h2 id="logo-text">Conect Song</h2>
                 </div>
-            </nav>
+                <ul id="menu">
+                    {% if request.user.is_authenticated %}
+                    <li id="search-bar">
+                        <form action="">
+                           <i class="fa fa-search"></i> <input type="search" placeholder="Pesquisar...">
+                        </form>
+                    </li>
+                    <li class="menu-options">
+                        <i class="fa-solid fa-message"></i>
+                    </li>
+                    <li class="menu-options">
+                        <i class="fa fa-bell"></i>
+                    </li>
+                    <li class="menu-options">
+                        <img id="perfil-foto" src="{% static 'img/perfil-generico.png' %}" alt="">
+                    </li>
+                    {% else %}
+                        <li id="login-option"><a href="{% url 'login' %}">Login</a></li>
+                    {% endif %}
+                </ul>
+                <!-- <div id="box-menu">
+                    <img src="{% static 'img/perfil-generico.png' %}" alt="">
+                    <span>{{ request.user }}</span>
+                </div> -->
+                
+            </div>
         </nav>
     </header>
     {% endblock %}

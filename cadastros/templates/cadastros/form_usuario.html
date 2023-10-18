@@ -1,41 +1,44 @@
-{% extends 'usuarios/login.html' %}
+{% extends 'paginas/index.html' %}
 
 {% load static %}
 
-{% block styles-form %}
-    <style>
-
-    </style>
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
 {% endblock %}
 
-{% block titulo-form %}
-    <h4>Cadastro de usuário</h4> <br>
-{% endblock %}
+{% block content %}
 
-{% block campos %}
-    <div class="input-field">
-        <label for="{{ form.username.id_for_label }}">Usuário</label>
-        {{ form.username }}
-    </div>
-
-    <div class="input-field">
-        <label for="{{ form.email.is_for_label }}">Email</label>
-        {{ form.email }}
-    </div>
-
-    <div class="input-field">
-        <label for="{{ form.password1.id_for_label }}">Senha</label>
-        {{ form.password1 }}
-    </div>
-
-    <div class="input-field">
-        <label for="{{ form.password2.id_for_label }}">Confirmar Senha</label>
-        {{ form.password2 }}
-    </div>
-
-    <button type="submit" class="btn">Confirmar</button>
-{% endblock %}
-
-{% block cadastrar %}
+<div class="form-container">
+                
+    <div class="form-box"> 
+        <h3 class="titulo-form">Cadastro de usuário</h3> <br> 
     
+        <form id="form-cadastro" method="POST">
+    
+            {% csrf_token %}
+
+            <div class="input-field">
+                <label for="{{ form.username.id_for_label }}">Usuário</label>
+                {{ form.username }}
+            </div>
+
+            <div class="input-field">
+                <label for="{{ form.email.is_for_label }}">Email</label>
+                {{ form.email }}
+            </div>
+
+            <div class="input-field">
+                <label for="{{ form.password1.id_for_label }}">Senha</label>
+                {{ form.password1 }}
+            </div>
+
+            <div class="input-field">
+                <label for="{{ form.password2.id_for_label }}">Confirmar Senha</label>
+                {{ form.password2 }}
+            </div>
+
+            <button type="submit" class="btn btn-confirmar">Confirmar</button>
+        </form>
+    </div> 
+</div>
 {% endblock %}

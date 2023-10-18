@@ -4,21 +4,24 @@
     width: 350px;
     padding: 40px;
     border: 2px solid #68187c;
+    border-image: linear-gradient(to right, #ff00ff, #43439c) 2;
     border-radius: 3px;
 }
 
-h2 {
-    align-self: center;
-}
-
-#form-login {
+#form-login, #form-cadastro {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
 }
 
 .titulo-form {
-    color: #096661;
+    color: #d3cbcb;
+    background-image: linear-gradient(to right, #ff00ff, #5d5dc5, #00ffff, #5d5dc5, #00ffff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent; 
+    align-self: center;
+    margin-top: -5px;
 }
 
 .input-field {
@@ -27,13 +30,17 @@ h2 {
     gap: 3px;
 }
 
+label {
+    color: #d3cbcb;
+}
+
 input {
     outline: 0;
-    padding-inline: 5px;
     padding-block: 3px;
     background-color: transparent;
     border: 0;
     border-bottom: 2px solid #68187c;
+    border-image: linear-gradient(to right, #ff00ff, #43439c) 2;
     color: #fff;
 }
 
@@ -41,39 +48,80 @@ input:focus, textarea:focus {
     box-shadow: none;
     outline: 0;
     border-color: #7c1866;
-}
-
-.btn-form {
-    min-width: 100px;
-    background-color: #a8ccb6;
-    border-color: #096661;
-    color: #096661;
-    transition: all 0.2s;
-    justify-self: center;
-}
-
-.btn-form:hover {
-    background-color: #a1cab1;
-    border-color: #064642;
-    color: #064642;
+    border-image: linear-gradient(to right, #ff00ff, 
+    #43439c, #00ffff) 2;
 }
 
 .btn {
     min-width: 100px;
     margin-top: 15px;
     border: 2px solid #68187c;
-    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    border-image: linear-gradient(to right, #ff00ff, #43439c) 2;
+    border-radius: 2px;
+    transition: all ease-in-out 0.2s;
+    color: #e2e1e1;
 }
 
 .btn:hover {
     border: 2px solid #7c1866;
     color: #e2e1e1;
+    border-image: linear-gradient(to right, #ff00ff, 
+    #43439c, #00ffff) 2;
+}
+
+.btn-login, .btn-confirmar {
+    background-image: linear-gradient(to right, #ff00ff, #5d5dc5);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent; 
+    font-weight: bold;
+    margin-top: 25px;
+}
+
+.btn-login:hover, .btn-confirmar:hover {
+    border-image: linear-gradient(to right, #ff00ff, #ff00ff,#43439c, #43439c, #43439c, #00ffff) 2;
+    background-image: linear-gradient(to right, #ff00ff, #5d5dc5, #00ffff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent; 
 }
 
 .btn-cadastrar {
-    background-color: #68187c;
+    background-color: #531263;
+    font-weight: 500;
+    color: #d3a6df;
 }
 
 .btn-cadastrar:hover {
-    background-color: #7c1866;
+    background-color: #531263;
+    color: #73aeb6;
 }
+
+#box-btn {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#redefinir-senha {
+    text-align: center;
+    text-decoration: none;
+    color: #d3cbcb;
+}
+
+#redefinir-senha:hover {
+    text-decoration: underline;
+}
+
+#pasword-box {
+    position: relative;
+}
+
+.error {
+    font-size: 14px;
+    position: absolute;
+    bottom: -40px;
+    color: #c23275;
+} 

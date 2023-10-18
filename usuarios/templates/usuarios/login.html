@@ -4,11 +4,6 @@
 
 {% block styles %}
     <link rel="stylesheet" href="{% static 'css/form.css' %}">
-
-    {% block styles-form %}
-
-    {% endblock %}
-
 {% endblock %}
 
 {% block content %}
@@ -17,31 +12,31 @@
                 
     <div class="form-box"> 
         {% block titulo-form %}
-            <h2>Conect Song</h2> <br>
+            <h2 class="titulo-form">Conect Song</h2> <br>
         {% endblock%}
 
         <form id="form-login" action="" method="POST">
-
             {% csrf_token %}
 
-            {% block campos %}
             <div class="input-field">
-                <label for="{{ form.username.id_for_label }}">Usuario</label>
+                <label for="{{ form.username.id_for_label }}">Usuário</label>
                 {{ form.username }}
             </div>
 
-            <div class="input-field">
+            <div class="input-field" id="pasword-box">
                 <label for="{{ form.password.id_for_label }}">Senha</label>
                 {{ form.password }}
+                {% if form.non_field_errors %}
+                    <p class="error">{{ form.non_field_errors.as_text }}</p>
+                {% endif %}
             </div>
-
-            <button type="submit" class="btn btn-login">Login</button>
-            {% endblock%}
+            <div id="box-btn">
+                <button type="submit" class="btn btn-login">Login</button>
+                <a id="redefinir-senha" href="#">Esqueceu sua Senha?</a>
+                <hr>
+            </div>
         </form>
-        {% block cadastrar %}
-            <hr>
-            <a class="btn btn-cadastrar" href="{% url 'cadastrar-usuario' %}">Cadastrar</a>
-        {% endblock %}
+        <a class="btn btn-cadastrar" href="{% url 'cadastrar-usuario' %}">Cadastrar</a>
     </div>
 </div>
 

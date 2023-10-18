@@ -1,11 +1,13 @@
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
-from django.contrib.auth.mixins import LoginRequiredMixin
 from cadastros.forms import UsuarioForm
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.contrib.auth.models import User
+from usuarios.models import Perfil
 
 # Create your views here.
-class UsuarioCreate(LoginRequiredMixin, CreateView):
-    login_url = reverse_lazy('login')
+class UsuarioCreate(CreateView):
     form_class = UsuarioForm
     template_name = 'cadastros/form_usuario.html'
     success_url = reverse_lazy('login')
@@ -17,3 +19,9 @@ class UsuarioCreate(LoginRequiredMixin, CreateView):
         context['titulo'] = 'Cadastro de Novo Usuário'
 
         return context
+
+
+@receiver(post_save, sender=User)
+def criar_perfil_de_usuario(sender, instance, created, **kwargs):
+    if created:
+        Perfil.objects.create(usuario=instance)
