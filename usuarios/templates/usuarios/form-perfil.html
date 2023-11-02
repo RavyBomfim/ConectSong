@@ -11,8 +11,9 @@
 {% block content %}
 
 <div class="form-container">
-    <form action="" enctype="multipart/form-data" id="form-perfil">
+    <form action="" method="POST" enctype="multipart/form-data" id="form-perfil">
         {% csrf_token %}
+        {{ form.errors }}
         <div id="foto_nome-box">
             <div class="input-field" id="input-foto">
                 <label for="{{ form.foto_perfil.id_for_label }}" id="label-foto">
