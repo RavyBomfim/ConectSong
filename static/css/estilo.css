@@ -5,24 +5,47 @@
     list-style: none;
 }
 
-
 body {
     background-color: #202020;
-    color: #ebe8e8;
+    color: #d3cbcb;
+}
+
+a, a:hover {
+    text-decoration: none;
+    color: #b9b8b8;
+}
+
+.btn-default {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    height: 40px;
+    background-color: #3f3f3f;
+    border: 2px solid #3f3f3f;
+    border-radius: 5px;
+    padding-inline: 15px;
+    padding-block: 10px;
+    font-size: 17px;
+    font-weight: 600;
+    color: #d3cbcb;
 }
 
 header {
+    width: 100%;
     height: 74px;
+    position: fixed;
+    top: 0;
     border-bottom: 1px solid #282929;
+    /* background-color: #212529; */
     padding-inline: 22px;
     color: #d3cbcb; 
 }
 
-.container-header {
+#header-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0;
 }
 
 #box-header {
@@ -30,11 +53,6 @@ header {
     gap: 25px;
     align-items: center;
     padding-bottom: 5px;
-}
-
-#menu-lateral i {
-    font-size: 30px;
-    cursor: pointer;
 }
 
 #logo {
@@ -69,10 +87,10 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 45px;
-    height: 45px;
+    width: 44px;
+    height: 44px;
     background-color: #353535;
-    border-radius: 45px;
+    border-radius: 43px;
     margin-bottom: 3px;
 }
 
@@ -96,7 +114,18 @@ header {
     font-size: 18px;
     font-weight: 500;
     color: #b8b8b8;
-    background-image: linear-gradient(to right, #ff00ff, #5d5dc5, #00ffff);
+    background-image: linear-gradient(to right, #ff00ff, #5d5dc5, #00ffff, );
+}
+
+/* #search-bar i {
+    background-image: linear-gradient(to top right, #ff00ff, #5d5dc5, #00ffff);
+} */
+
+#search-bar input::placeholder {
+    background-image: linear-gradient(to right, #ff00ff, #5d5dc5, #00ffff, #ff00ff, #5d5dc5, #00ffff);
+}
+
+#search-bar input, #search-bar input::placeholder {
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent; 
@@ -130,19 +159,10 @@ header {
     border-radius: 35px;
 } */
 
-#perfil-foto {
-    width: 45px;
-    border-radius: 45px;
+.perfil-foto {
+    width: 44px;
+    border-radius: 44px;
 }
-
-.dropdown-toggle {
-    color: black;
-    font-weight: 500;
-}
-
-/* .dropdown {
-    padding-left: 30px;
-} */
 
 #login-option {
     font-size: 18px;
@@ -173,11 +193,101 @@ main {
     padding-block: 30px;
 }
 
+#main-container {
+    margin-top: 80px;
+}
+
 .form-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+#fotoperfil-box {
+    position: relative;
+}
+
+#abrir-menu-lateral {
+    cursor: pointer;
+}
+
+#fotoperfil-box #icone-menu-lateral {
+    width: 18px;
+    height: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: -3px;
+    right: 0;
+    background-color: #353535;
+    padding: 3px;
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#icone-menu-lateral i {
+    font-size: 11px;
+    color: #b8b8b8;
+}
+
+#menu-lateral {
+    display: none;
+    width: 300px;
+    background-color: #242424;
+    border-radius: 7px;
+    position: absolute;
+    top: 56px;
+    right: -5px;
+    padding: 9px;
+}
+
+#menu-lateral i {
+    font-size: 17px;
+    margin-right: 7px;
+    cursor: pointer;
+}
+
+#menu-lateral .fa-question {
+    margin-right: 12px;
+}
+
+#menu-lateral li {
+    font-weight: 600;
+}
+
+#menu-lateral li:hover a {
+    background-color: #424242;
+}
+
+#menu-lateral li a, #perfil-box li a {
+    display: flex;
+    padding: 9px;
+    border-radius: 5px;
+}
+
+#perfil-box {
+    background-color: #2b2a2a;
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+#perfil-box a {
+    gap: 7px;
+}
+
+#perfil-box img {
+    width: 38px;
+}
+
+#perfil-box span {
+    text-transform: capitalize;
+    font-size: 18px;
+    align-self: flex-end;
+    padding-bottom: 5px;
 }
 
 footer {

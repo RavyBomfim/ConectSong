@@ -32,9 +32,13 @@
                 {{ form.password1 }}
             </div>
 
-            <div class="input-field">
+            <div class="input-field pasword-box">
                 <label for="{{ form.password2.id_for_label }}">Confirmar Senha</label>
                 {{ form.password2 }}
+                {% for error in form.password2.errors %}
+                    <!-- <p class="error"> {{ error }}</p> -->
+                    <p class="error"> *As senhas não coincidem!</p>
+                {% endfor %}
             </div>
 
             <button type="submit" class="btn btn-confirmar">Confirmar</button>

@@ -115,7 +115,7 @@ input:focus, textarea:focus {
     text-decoration: underline;
 }
 
-#pasword-box {
+.pasword-box {
     position: relative;
 }
 

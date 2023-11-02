@@ -1,0 +1,45 @@
+{% extends 'paginas/index.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/perfil.css' %}">
+{% endblock %}
+
+{% block main %}
+    <div class="container" id="main-container">
+        <div id="perfil-informs-box">
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div id="capa">
+                    <img src="" alt="">
+                    <label for="foto-capa-input" class="btn-default" id="foto-capa-label"> 
+                        <input type="file" id="foto-capa-input" class="inputs-file">
+                        <i class="fa-solid fa-camera"></i> Editar Capa
+                    </label>
+                    <label for="foto-perfil-input" id="foto-de-perfil">
+                        <img src="{% static 'img/perfil-generico.png' %}" alt="">
+                        <input type="file" id="foto-perfil-input" class="inputs-file">
+                    </label>
+                    <label for="foto-perfil-input" id="foto-perfil-icone">
+                        <i class="fa-solid fa-camera"></i>
+                    </label>
+                </div>
+            </form>
+            <div id="perfil-informs">
+                <div id="perfil-nome">
+                    <h2>{{request.user.perfil}}</h2>
+                </div>
+                <a href="{% url 'editar-perfil' request.user.perfil.pk %}" class="btn btn-default" id="editar-perfil">
+                    <i class="fa-solid fa-pencil"></i> Editar Perfil
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+        
+{%endblock %}
