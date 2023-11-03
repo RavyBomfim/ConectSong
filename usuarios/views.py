@@ -18,7 +18,7 @@ class VerPerfil(LoginRequiredMixin, TemplateView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         user = self.request.user
-        perfil = Perfil.objects.get(id=user.id) 
+        perfil = Perfil.objects.get(usuario=user.id) 
         context['perfil'] = perfil
         return context
     
@@ -36,7 +36,7 @@ class PerfilUpdate(LoginRequiredMixin, UpdateView):
         perfil = self.object
 
         foto = {
-            'foto_perfil': perfil.foto_perfil if perfil.foto_perfil else '',
+            'foto': perfil.foto_perfil if perfil.foto_perfil else '',
         }
         context['foto'] = foto
 

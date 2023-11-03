@@ -33,7 +33,7 @@
                 <ul id="menu">
                     {% if request.user.is_authenticated %}
                     <li id="search-bar">
-                        <form action="">
+                        <form action="" method="GET">
                            <i class="fa fa-search"></i> <input type="search" placeholder="Pesquisar...">
                         </form>
                     </li>
@@ -45,13 +45,21 @@
                     </li>
                     <li class="menu-options" id="fotoperfil-box">
                         <div id="abrir-menu-lateral">
-                            <img class="perfil-foto" id="perfil-foto" src="{% static 'img/perfil-generico.png' %}" alt="">
+                            {% if perfil.foto_perfil %}
+                                <img class="perfil-foto" src="/media/{{perfil.foto_perfil}}" alt="">
+                            {% else %}
+                                <img class="perfil-foto" src="{% static 'img/perfil-generico.png' %}" alt="">
+                            {% endif %}
                             <div id="icone-menu-lateral"><i class="fa-solid fa-bars"></i></div>
                         </div>
                         <ul id="menu-lateral">
                             <li id="perfil-box">
                                 <a href="{% url 'perfil' %}">
-                                    <img id="perfil-foto" src="{% static 'img/perfil-generico.png' %}" alt="">
+                                    {% if perfil.foto_perfil %}
+                                        <img class="perfil-foto" src="/media/{{perfil.foto_perfil}}" alt="">
+                                    {% else %}
+                                        <img id="perfil-foto" src="{% static 'img/perfil-generico.png' %}" alt="">
+                                    {% endif %}
                                     <span>{{request.user}}</span>
                                 </a>
                                 </a>

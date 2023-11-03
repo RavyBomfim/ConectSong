@@ -116,7 +116,7 @@ header {
     font-size: 18px;
     font-weight: 500;
     color: #b8b8b8;
-    background-image: linear-gradient(to right, #ff00ff, #5d5dc5, #00ffff, );
+    background-image: linear-gradient(to right, #ff00ff, #5d5dc5, #00ffff);
 }
 
 /* #search-bar i {
@@ -163,7 +163,7 @@ header {
 
 .perfil-foto {
     width: 44px;
-    border-radius: 44px;
+    border-radius: 100%;
 }
 
 #login-option {
@@ -265,10 +265,14 @@ main {
     background-color: #424242;
 }
 
-#menu-lateral li a, #perfil-box li a {
+#menu-lateral li a, #perfil-box a {
     display: flex;
     padding: 9px;
     border-radius: 5px;
+}
+
+#menu-lateral li a {
+    align-items: center;
 }
 
 #perfil-box {
@@ -284,6 +288,7 @@ main {
 
 #perfil-box img {
     width: 38px;
+    border-radius: 100%;
 }
 
 #perfil-box span {

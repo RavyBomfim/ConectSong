@@ -14,15 +14,23 @@
             <form action="" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div id="capa">
-                    <img src="" alt="">
-                    <label for="foto-capa-input" class="btn-default" id="foto-capa-label"> 
+                    <!-- <img src="{% static 'img/capa-generica.jpg' %}" alt="" id="foto-capa"> -->
+                    {% if perfil.foto_capa %}
+                        <img src="/media/{{perfil.foto_perfil}}" alt="" class="foto-de-perfil">
+                    {% endif %}
+                    <label for="foto-capa-input" class="btn-default" id="foto-capa-editar"> 
                         <input type="file" id="foto-capa-input" class="inputs-file">
                         <i class="fa-solid fa-camera"></i> Editar Capa
                     </label>
-                    <label for="foto-perfil-input" id="foto-de-perfil">
-                        <img src="{% static 'img/perfil-generico.png' %}" alt="">
+                    <div id="foto-perfil-box">
+                        {% if perfil.foto_perfil %}
+                            <img src="/media/{{perfil.foto_perfil}}" alt="" class="foto-de-perfil">
+                        {% else %}
+                            <img src="{% static 'img/perfil-generico.png' %}" alt="" class="foto-de-perfil">
+                        {% endif %}
+
                         <input type="file" id="foto-perfil-input" class="inputs-file">
-                    </label>
+                    </div>
                     <label for="foto-perfil-input" id="foto-perfil-icone">
                         <i class="fa-solid fa-camera"></i>
                     </label>
@@ -30,7 +38,7 @@
             </form>
             <div id="perfil-informs">
                 <div id="perfil-nome">
-                    <h2>{{request.user.perfil}}</h2>
+                    <h2>{{perfil}}</h2>
                 </div>
                 <a href="{% url 'editar-perfil' request.user.perfil.pk %}" class="btn btn-default" id="editar-perfil">
                     <i class="fa-solid fa-pencil"></i> Editar Perfil
@@ -41,5 +49,24 @@
 {% endblock %}
 
 {% block scripts %}
-        
+    <script>
+        $(document).ready(function() {
+            
+            $('#id_foto_perfil').on('change', function(e) {
+                var input = e.target;
+                if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    // Define a imagem de pré-visualização
+                    $('#imagem-perfil').attr('src', e.target.result);
+                };
+
+                // Carrega o arquivo de imagem
+                reader.readAsDataURL(input.files[0]);
+                }
+            });
+
+        });
+    </script>
 {%endblock %}

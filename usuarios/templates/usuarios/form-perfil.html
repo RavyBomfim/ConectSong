@@ -105,10 +105,10 @@
         };
         $('#id_telefone').mask(telefoneMask, telOptions);
         
-        // var foto = '{{foto.foto_perfil}}';
-        // if (foto) {
-        //     $('#imagem-perfil').attr("src","/media/" + foto);
-        // } 
+        var foto = '{{foto.foto}}';
+        if (foto) {
+            $('#imagem-perfil').attr("src","/media/" + foto);
+        } 
     });
 </script>
 
