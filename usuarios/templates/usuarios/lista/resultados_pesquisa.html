@@ -1,0 +1,102 @@
+{% extends 'paginas/index.html' %}
+
+{% load static %}
+    
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/resultados-pesquisa.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <div class="container-fluid" id="results-container">
+        <h3>Resultados da Pesquisa</h3> 
+        {% for perfil in object_list %}
+            <div class="profiles-search-results">
+                {% if perfil.foto_perfil %}
+                    <a href="{% url 'ver-perfil' perfil.usuario.username %}" class="profile-photo-box">
+                        <img src="/media/{{perfil.foto_perfil}}" alt="" class="foto-de-perfil">
+                    </a>
+                {% else %}
+                    <a href="{% url 'ver-perfil' perfil.usuario.username %}" class="profile-photo-box">
+                        <img src="{% static 'img/perfil-generico.png' %}" alt="">
+                    </a>
+                {% endif %}
+                <div class="profile-informs-container">
+                    <div class="profile-informs-box">
+                        <a href="{% url 'ver-perfil' perfil.usuario.username %}" class="full-name">{{perfil.nome_completo}}</a>
+                        <div class="profile-informs">
+                            <span>
+                                {% if perfil.atribuicao and perfil.cidade %} 
+                                    {{perfil.atribuicao}}  
+                                    <span class="separator"><i class="fa-solid fa-caret-right"></i></span>  
+                                    Cidade: {{perfil.cidade}}
+                                {% elif perfil.atribuicao %}
+                                    {{perfil.atribuicao}}
+                                {% elif perfil.cidade %} 
+                                    Cidade: {{perfil.cidade}}
+                                {% endif %}
+                            </span>
+                        </div>
+                    </div>
+                    {% if perfil.usuario != request.user %}
+                        {% with conexao=perfil.conexao %}
+                            {% if not conexao %}
+                                <form method="post" action="{% url 'enviar-solicitacao' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" value="{{ perfil.usuario.id }}" name="recebeu-solicitacao">
+                                    <button class="btn-default btn-connect" type="submit">
+                                        <img class="img-btn" src="{% static 'img/c-plus-inset.png' %}">
+                                        Conectar
+                                    </button>
+                                </form>
+                            {% else %}
+                                {% if conexao.status %}
+                                    <button class="btn-default btn-message">
+                                        <i class="fa-regular fa-envelope"></i>
+                                        Mensagem
+                                    </button>
+                                {% else %}
+                                    {% if conexao.enviou_solicitacao == request.user %}
+                                        <form method="post" action="{% url 'cancelar-solicitacao' %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="conexao_id" value="{{ conexao.id }}">
+                                            <button class="btn-default btn-connect" type="submit">
+                                                <img class="img-btn" src="{% static 'img/c-arrow-inset.png' %}">
+                                                Pendente
+                                            </button>
+                                        </form>
+                                    {% else %}
+                                        <form method="post" action="{% url 'aceitar-solicitacao' %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="conexao-id" value="{{ conexao.id }}">
+                                            <button class="btn-default btn-connect" type="submit">
+                                                Aceitar Conexão
+                                            </button>
+                                        </form>
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                        {% endwith %}
+                    {% else %}
+                        <a class="btn-default btn-connect" href="{% url 'ver-perfil' request.user %}">
+                            <img class="user-btn" src="{% static 'img/user-icon-color.png' %}">
+                            Meu perfil
+                        </a>
+                    {% endif %}
+                    <!-- <button class="btn-default btn-message">
+                        <i class="fa-regular fa-envelope"></i>
+                        Enviar mensagem
+                    </button> -->
+                    <!-- <form method="post" action="{% url 'enviar-solicitacao'%}">
+                        {% csrf_token %}
+                        <input type="hidden" value="{{perfil.usuario.id}}" name="recebeu-solicitacao">
+                        <button class="btn-default btn-conect" type="submit">
+                            Conectar
+                        </button>
+                    </form> -->
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
+{% endblock %}

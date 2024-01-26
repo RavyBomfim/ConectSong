@@ -5,65 +5,193 @@
 {% load crispy_forms_tags %}
 
 {% block styles %}
+    <link rel="stylesheet" href="{% static 'css/inicio-main.css' %}">
     <link rel="stylesheet" href="{% static 'css/perfil.css' %}">
 {% endblock %}
 
 {% block main %}
     <div class="container" id="main-container">
-        <div id="perfil-informs-box">
-            <form action="" method="post" enctype="multipart/form-data">
+        <div id="container-cover-informs">
+            <form action="{% url 'editar-capa' %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                <div id="capa">
-                    <!-- <img src="{% static 'img/capa-generica.jpg' %}" alt="" id="foto-capa"> -->
+                <div id="cover-container">
                     {% if perfil.foto_capa %}
-                        <img src="/media/{{perfil.foto_perfil}}" alt="" class="foto-de-perfil">
+                        <img src="/media/{{perfil.foto_capa}}" alt="" class="photo-cover">
+                    {% else %}
+                        <img src="{% static 'img/capa-generica.jpg' %}" alt="" class="photo-cover">
                     {% endif %}
-                    <label for="foto-capa-input" class="btn-default" id="foto-capa-editar"> 
-                        <input type="file" id="foto-capa-input" class="inputs-file">
+                    {% if perfil.usuario == request.user %}
+                    <label for="photo-cover-input" class="btn-default" id="photo-cover-edit"> 
+                        <input type="file" id="photo-cover-input" name="foto-capa" class="inputs-file" accept="image/*">
+                        <input type="hidden" name="id-perfil" value="{{perfil.id}}">
                         <i class="fa-solid fa-camera"></i> Editar Capa
                     </label>
-                    <div id="foto-perfil-box">
-                        {% if perfil.foto_perfil %}
-                            <img src="/media/{{perfil.foto_perfil}}" alt="" class="foto-de-perfil">
-                        {% else %}
-                            <img src="{% static 'img/perfil-generico.png' %}" alt="" class="foto-de-perfil">
-                        {% endif %}
-
-                        <input type="file" id="foto-perfil-input" class="inputs-file">
+                    {% endif %}
+                    <div class="button-box-save-cancel" id="box-save-cancel-cover">
+                        <button type="submit" class="btn-default btn-form">Salvar Alteração</button>
+                        <button type="button" class="btn-default btn-form" id="descard-cover">Descartar</button>
                     </div>
-                    <label for="foto-perfil-input" id="foto-perfil-icone">
-                        <i class="fa-solid fa-camera"></i>
-                    </label>
                 </div>
             </form>
-            <div id="perfil-informs">
-                <div id="perfil-nome">
-                    <h2>{{perfil}}</h2>
+            <form action="{% url 'editar-foto-perfil' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div id="photo-profile-box">
+                    {% if perfil.foto_perfil %}
+                        <img src="/media/{{perfil.foto_perfil}}" alt="" class="photo-profile">
+                    {% else %}
+                        <img src="{% static 'img/perfil-generico.png' %}" alt="" class="photo-profile">
+                    {% endif %}
+
+                    <input type="file" id="photo-profile-input" name="foto-perfil" class="inputs-file" accept="image/*">
+                    <input type="hidden" name="id-perfil" value="{{perfil.id}}">
                 </div>
-                <a href="{% url 'editar-perfil' request.user.perfil.pk %}" class="btn btn-default" id="editar-perfil">
-                    <i class="fa-solid fa-pencil"></i> Editar Perfil
-                </a>
+                <div class="button-box-save-cancel" id="box-save-cancel-profile">
+                    <button type="submit" class="btn-default btn-form">Salvar Foto</button>
+                    <button type="button" class="btn-default btn-form" id="discard-profile">Descartar</button>
+                </div>
+                {% if perfil.usuario == request.user %}
+                <label for="photo-profile-input" id="photo-profile-icon-edit">
+                    <i class="fa-solid fa-camera"></i>
+                </label>
+                {% endif %}
+            </form>
+            <div id="profile-informs">
+                <div id="profile-name">
+                    <h3 id="name">{{perfil}}</h3>
+                    <span id="role">
+                        {% if perfil.atribuicao %}
+                            {{perfil.atribuicao}}
+                        {% endif %}
+                    </span>
+                </div>
+                {% if perfil.usuario == request.user %}
+                    <a href="{% url 'editar-perfil' %}" class="btn-default" id="profile-edit">
+                        <i class="fa-solid fa-pencil"></i> Editar Perfil
+                    </a>
+                {% else %}
+                    <div class="btns-box">
+                        {% if conexao %}
+                            {% if conexao.status %}
+                                <button class="btn-default btn-connect">
+                                    <img class="logo-btn" src="{% static 'img/ConnectSong-logo.png' %}">
+                                    Conectado
+                                </button>
+                            {% elif conexao.enviou_solicitacao == request.user %}
+                                <form method="post" action="{% url 'cancelar-solicitacao' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="conexao_id" value="{{ conexao.id }}">
+                                    <button class="btn-default btn-connect" type="submit">
+                                        <img class="img-btn" src="{% static 'img/c-arrow-inset.png' %}">
+                                        Pendente
+                                    </button>
+                                </form>
+                            {% else %}
+                                <form method="post" action="{% url 'aceitar-solicitacao' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="conexao-id" value="{{ conexao.id }}">
+                                    <button class="btn-default btn-connect" type="submit">
+                                        <i class="fa-regular fa-thumbs-up"></i>
+                                        Aceitar Conexão
+                                    </button>
+                                </form>
+                            {% endif %}
+                        {% else %}
+                            <form method="post" action="{% url 'enviar-solicitacao' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="recebeu-solicitacao" value="{{ perfil.usuario.id }}">
+                                <button class="btn-default btn-connect" type="submit">
+                                    <img class="img-btn" src="{% static 'img/c-plus-inset.png' %}">
+                                    Conectar
+                                </button>
+                            </form>
+                        {% endif %}
+                        <button class="btn-default btn-message">
+                            <i class="fa-regular fa-envelope"></i>
+                            Mensagem
+                        </button>
+                    </div>
+                {% endif %}
             </div>
         </div>
+
+        <div id="main-profile">
+            <div id="container-lateral">
+                <div id="container-informs-profile">
+                    <div id="title-informs-box">
+                        <h4 class="title-informs">Sobre</h4>
+                        <button class="btn-default">
+                            <i class="fa fa-pencil"></i>
+                        </button>
+                    </div>
+                    <div id="container-informs-data">
+                        {% if perfil.cidade %}
+                            <div class="informs-data">
+                                <i class="fa-solid fa-location-dot"></i> 
+                                {{ perfil.cidade }}
+                            </div>
+                        {% endif %}
+
+                        {% if perfil.descricao %}
+                            <div id="informs-description">
+                                {{ perfil.descricao }}
+                            </div>
+                        {% endif %}
+
+                        {% if not perfil.cidade and not perfil.descricao %}
+                            <div>
+                                Sem informações adiocionais.
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div id="container-conexions">
+
+                </div>
+            </div>
+            <div id="container-publicacoes">
+                {% include 'paginas/publicacao.html' %}
+            </div>
+        </div>
+
     </div>
 {% endblock %}
 
 {% block scripts %}
+
+    <script src="{% static 'js/inicio.js' %}"></script>
+
     <script>
         $(document).ready(function() {
-            
-            $('#id_foto_perfil').on('change', function(e) {
+
+            // Alterar foto de capa
+            $('#photo-cover-input').on('change', function(e) {
                 var input = e.target;
                 if (input.files && input.files[0]) {
-                var reader = new FileReader();
+                    var reader = new FileReader();
 
-                reader.onload = function(e) {
-                    // Define a imagem de pré-visualização
-                    $('#imagem-perfil').attr('src', e.target.result);
-                };
+                    reader.onload = function(e) {
+                        $('#photo-cover').attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                    $('#box-save-cancel-cover').css('display', 'flex');
+                }
+            });
 
-                // Carrega o arquivo de imagem
-                reader.readAsDataURL(input.files[0]);
+            $('#discard-cover, #discard-profile').click(function() {
+                location.reload();
+            });
+            
+            // Alterar foto de perfil
+            $('#photo-profile-input').on('change', function(e) {
+                var input = e.target;
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        $('.photo-profile').attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                    $('#box-save-cancel-profile').css('display', 'flex');
                 }
             });
 

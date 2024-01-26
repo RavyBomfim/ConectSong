@@ -18,13 +18,19 @@
             {% csrf_token %}
 
             <div class="input-field">
-                <label for="{{ form.username.id_for_label }}">Usuário</label>
-                {{ form.username }}
+                <label for="{{ form.nome_completo.id_for_label }}">Nome Completo</label>
+                {{ form.nome_completo }}
+                <!-- {% for error in form.username.errors %}
+                    <p class="error input-errors">Este nome de usuário já está em uso.</p>
+                {% endfor %} -->
             </div>
 
             <div class="input-field">
                 <label for="{{ form.email.is_for_label }}">Email</label>
                 {{ form.email }}
+                {% for error in form.email.errors %}
+                    <p class="error input-errors">{{ error }}</p>
+                {% endfor %}
             </div>
 
             <div class="input-field">
@@ -35,10 +41,15 @@
             <div class="input-field pasword-box">
                 <label for="{{ form.password2.id_for_label }}">Confirmar Senha</label>
                 {{ form.password2 }}
-                {% for error in form.password2.errors %}
-                    <!-- <p class="error"> {{ error }}</p> -->
-                    <p class="error"> *As senhas não coincidem!</p>
-                {% endfor %}
+                {% if form.password1.errors %}
+                    {% for error in form.password1.errors %}
+                        <p class="error"> {{ error }}</p>
+                    {% endfor %}
+                {% elif form.password2.errors %}
+                    {% for error in form.password2.errors %}
+                        <p class="error"> {{ error }}</p>
+                    {% endfor %}
+                {% endif %} 
             </div>
 
             <button type="submit" class="btn btn-confirmar">Confirmar</button>

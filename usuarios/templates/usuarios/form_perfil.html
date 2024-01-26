@@ -1,0 +1,157 @@
+{% extends 'paginas/index.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/form-perfil.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="form-container">
+    <form action="" method="POST" enctype="multipart/form-data" id="form-perfil">
+        {% csrf_token %}
+        <div id="foto_nome-box">
+            <div class="input-field" id="input-foto">
+                <label for="{{ form.foto_perfil.id_for_label }}" id="label-foto">
+                    <!-- {% if foto %}
+                        <img src="/media/{{foto.foto_perfil}}" alt="" id="imagem-perfil">
+                    {% else %} 
+                        <img src="{% static 'img/perfil-generico.png' %}" alt="" id="imagem-perfil">
+                    {% endif %} -->
+                    <img src="{% static 'img/perfil-generico.png' %}" alt="" id="imagem-perfil">
+                    <div id="icone-box">
+                        <i class="fa-solid fa-camera"></i>
+                    </div>
+                </label>
+                <div class="file-field">
+                    {{form.foto_perfil}}
+                </div>
+            </div>
+            <div class="input-field" id="field-nome">
+                {{form.nome_completo}}
+                <label for="{{ form.nome_completo.id_for_label }}" id="label-nome" class="btn-default">
+                    <i class="fa-solid fa-pencil"></i>
+                </label>
+            </div>
+        </div>
+        <div class="input-field" id="field-atribuicao">
+            <label id="lbl-atribuicao">O que você é ? <span>(Selecione uma ou mais opções)</span></label>
+            <div id="checkox-container">
+                {% for checkbox_id, checkbox_label in form.fields.atribuicao.choices %}
+                    <div class="checkbox">
+                        <input type="checkbox" name="atribuicao" id="{{ checkbox_id }}" value="{{ checkbox_id }}"
+                            {% if checkbox_id in form.initial.atribuicao %}checked{% endif %}>
+                        <label class="label-select" for="{{ checkbox_id }}">
+                            <i class="fa fa-check"></i> {{ checkbox_label }}(a)
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="input-field">
+            <label for="{{ form.descricao.id_for_label }}">Descrição</label>
+            {{form.descricao}}
+        </div>
+        <div class="input-group">
+            <div class="input-field">
+                <label for="{{ form.data_nascimento.id_for_label }}">Nascimento</label>
+                {{form.data_nascimento}}
+            </div>
+            <div class="input-field" id="input-cidade">
+                <label for="{{ form.cidade.id_for_label }}">Cidade</label>
+                {{form.cidade}}
+            </div>
+            <div class="input-field" id="field-sexo">
+                <label for="{{ form.descricao.id_for_label }}">Sexo</label>
+                {{form.sexo}}
+            </div>
+        </div>
+        <div class="btn-box">
+            <button type="submit" class="btn-default">Salvar Alterações</button>
+        </div>
+            <!-- {{ form|crispy }} -->
+    </form>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+    $(document).ready(function() {
+        $('#id_foto_perfil').on('change', function(e) {
+            var input = e.target;
+            if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                // Define a imagem de pré-visualização
+                $('#imagem-perfil').attr('src', e.target.result);
+            };
+
+            // Carrega o arquivo de imagem
+            reader.readAsDataURL(input.files[0]);
+            }
+        });
+
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        
+        $('#label-nome').click(function() {
+            const input = $('#id_nome_completo');
+            var nome = input.val();
+            input[0].setSelectionRange(nome.length, nome.length);
+            input.focus();
+        });
+        
+        var nome =$('#id_nome_completo').val();
+        console.log(nome);
+
+        $('#id_data_nascimento').mask('00/00/0000');
+        var telefoneMask = function (val) {
+            return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+        }, 
+        telOptions = {
+            onKeyPress: function(val, e, field, options) {
+                field.mask(telefoneMask.apply({}, arguments), options);
+            }
+        };
+        $('#id_telefone').mask(telefoneMask, telOptions);
+        
+        var foto = '{{foto.foto}}';
+        if (foto) {
+            $('#imagem-perfil').attr("src","/media/" + foto);
+        } 
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('button').on('click', function() {
+            var inputField = $('#id_atribuição');
+            var button = $(this);
+
+            var existingValues = inputField.val().split('/');
+
+            var index = existingValues.indexOf(button.text());
+
+            if (index === -1) {
+                existingValues.push(button.text());
+                button.addClass("selected");
+            } else {
+                existingValues.splice(index, 1);
+                button.removeClass("selected");
+            }
+
+            inputField.val(existingValues.join('/'));
+        });
+    });
+</script>
+
+{%endblock %}

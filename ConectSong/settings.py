@@ -26,6 +26,8 @@ SECRET_KEY = 'django-insecure-hn7_%aoxe48!fg6pm0hl0(&**rwx8923_7e!(3a&3l7$qbk5w+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+""" ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]'] """
+
 ALLOWED_HOSTS = []
 
 
@@ -41,7 +43,10 @@ INSTALLED_APPS = [
     'paginas.apps.PaginasConfig',
     'cadastros.apps.CadastrosConfig',
     'usuarios.apps.UsuariosConfig',
+    'chat.apps.ChatConfig',
     'django_extensions',
+    'channels',
+    'channels_redis',
     'crispy_forms',
     'crispy_bootstrap5',
 ]
@@ -52,6 +57,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -79,6 +85,17 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'ConectSong.wsgi.application'
+
+'''ASGI_APPLICATION = 'ConectSong.asgi.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("localhost", 6379)],
+        },
+    },
+}'''
 
 
 # Database
@@ -143,3 +160,4 @@ LOGIN__URL = 'login'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTHENTICATION_BACKENDS = ['usuarios.backends.EmailBackend']

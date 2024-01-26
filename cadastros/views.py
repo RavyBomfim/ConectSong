@@ -12,16 +12,21 @@ class UsuarioCreate(CreateView):
     template_name = 'cadastros/form_usuario.html'
     success_url = reverse_lazy('login')
 
+    def form_valid(self, form):
+        form.instance.username = form.cleaned_data.get('email').split('@')[0]
+        form_data = {'nome_completo': form.cleaned_data.get('nome_completo')}
+        form.instance.form_data = form_data
+        return super().form_valid(form)
     
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-
         context['titulo'] = 'Cadastro de Novo Usuário'
-
         return context
 
 
 @receiver(post_save, sender=User)
 def criar_perfil_de_usuario(sender, instance, created, **kwargs):
     if created:
-        Perfil.objects.create(usuario=instance)
+        form_data = getattr(instance, 'form_data', None)
+        nome_completo = form_data.get('nome_completo') if form_data else None
+        Perfil.objects.create(usuario=instance, nome_completo=nome_completo)

@@ -1,0 +1,104 @@
+.btn-default {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    height: 40px;
+    background-color: var(--gray-btn);
+    border: 2px solid var(--gray-btn);
+    border-radius: 5px;
+    padding-inline: 12px;
+    padding-block: 10px;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--default-color);
+    transition: ease-in-out 0.2s;
+}
+
+/* .btn-default:hover {
+    background-color: #494848;
+} */
+
+.btn-message, .btn-connect {
+    width: max-content;
+    gap: 7px;
+    background-color: transparent;
+    border-color: #6a41a0;
+    color: #9b6cd8;
+    font-size: 15px;
+}
+
+.btn-message:hover, .btn-connect:hover {
+    border-color: #6868b8;
+    color: #7a7ad6;
+}
+
+.btn-connect i, .btn-message i {
+    font-size: 20px;
+    background-image: linear-gradient(to right, #ff00ff, #5d5dc5, #00ffff);
+    background-color: #9b6cd8;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent; 
+}
+
+.btns-box .btn-connect, .btns-box .btn-message {
+    border-color: #6868b8;
+    color: #7a7ad6;
+}
+
+.btns-box .btn-connect:hover, .btns-box .btn-message:hover {
+    border-color: #5e4fb4;
+    color: #6558b3;
+}
+
+.btns-box .btn-message {
+    background-color: rgba(104, 104, 184, 0.2);
+}
+
+.img-btn {
+    width: 25px;
+}
+
+.logo-btn {
+    width: 20px;
+}
+
+.user-btn {
+    width: 17px;
+}
+
+::-webkit-scrollbar {
+   background-color: #2c2c2c;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #2c2c2c;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #5c5858;
+    border: 2px solid #2c2c2c;
+} 
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #666262;
+} 
+
+/* .btn-connect {
+    border-image: linear-gradient(to right, #ff00ff, #43439c, #00ffff) 2;
+    background-image: linear-gradient(to right, #ff00ff, #5d5dc5, #00ffff);
+    background-color: rgba(59, 59, 104, 0.3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent; 
+} */
+
+/* .btn-default:hover {
+    border-image: linear-gradient(to right, #ff00ff, #43439c, #00ffff) 2;
+    background-image: linear-gradient(to right, #ff00ff, #5d5dc5, #00ffff);
+    background-color: rgba(59, 59, 104, 0.3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent; 
+} */

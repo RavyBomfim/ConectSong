@@ -25,6 +25,7 @@
 }
 
 .input-field {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 3px;
@@ -50,6 +51,13 @@ input:focus, textarea:focus {
     border-color: #7c1866;
     border-image: linear-gradient(to right, #ff00ff, 
     #43439c, #00ffff) 2;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px  #191919 inset !important;
 }
 
 .btn {
@@ -120,8 +128,14 @@ input:focus, textarea:focus {
 }
 
 .error {
+    width: max-content;
     font-size: 14px;
     position: absolute;
-    bottom: -40px;
+    top: 60px;
     color: #c23275;
 } 
+
+.input-errors {
+    min-width: 270px;
+    bottom: -35px;
+}

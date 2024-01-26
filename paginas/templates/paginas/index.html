@@ -5,20 +5,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ConectSong</title>
+    <title>ConnectSong</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 
+    <link rel="stylesheet" href="{% static 'css/variaveis.css' %}">
     <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+    <link rel="stylesheet" href="{% static 'css/btns.css' %}">
+    <link rel="stylesheet" href="{% static 'css/chat.css' %}">
 
     {% block styles %}
-        <link rel="stylesheet" href="{% static 'css/inicio-main.css' %}">
+        <!-- <link rel="stylesheet" href="{% static 'css/publicacao.css' %}"> -->
     {% endblock %}
 </head>
 <body>
@@ -28,39 +30,40 @@
         <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container-fluid" id="header-container">
                 <div id="logo">
-                    <img src="{% static 'img/ConectSong.png' %}" alt=""> <h2 id="logo-text">Conect Song</h2>
+                    <img src="{% static 'img/ConnectSong.png' %}" alt=""> <h2 id="logo-text">Connect Song</h2>
                 </div>
                 <ul id="menu">
                     {% if request.user.is_authenticated %}
                     <li id="search-bar">
-                        <form action="" method="GET">
-                           <i class="fa fa-search"></i> <input type="search" placeholder="Pesquisar...">
+                        <form action="" id="search-form" method="GET">
+                           <i class="fa fa-search"></i> <input type="search" placeholder="Pesquisar..." name="search" id="profile-search">
                         </form>
+                        <ul id="profile-list"></ul>
                     </li>
-                    <li class="menu-options">
-                        <i class="fa-solid fa-message"></i>
+                    <li class="menu-options" id="show-chats">
+                        <i class="fa-regular fa-comment"></i>
                     </li>
-                    <li class="menu-options">
-                        <i class="fa fa-bell"></i>
+                    <li class="menu-options" id="notifications">
+                        <i class="fa-regular fa-bell"></i>
                     </li>
                     <li class="menu-options" id="fotoperfil-box">
-                        <div id="abrir-menu-lateral">
-                            {% if perfil.foto_perfil %}
-                                <img class="perfil-foto" src="/media/{{perfil.foto_perfil}}" alt="">
+                        <div id="open-lateral-menu">
+                            {% if request.user.perfil.foto_perfil %}
+                                <img class="perfil-foto" src="/media/{{request.user.perfil.foto_perfil}}" alt="">
                             {% else %}
                                 <img class="perfil-foto" src="{% static 'img/perfil-generico.png' %}" alt="">
                             {% endif %}
-                            <div id="icone-menu-lateral"><i class="fa-solid fa-bars"></i></div>
+                            <div id="lateral-menu-icon"><i class="fa-solid fa-bars"></i></div>
                         </div>
-                        <ul id="menu-lateral">
+                        <ul id="lateral-menu"> 
                             <li id="perfil-box">
-                                <a href="{% url 'perfil' %}">
-                                    {% if perfil.foto_perfil %}
-                                        <img class="perfil-foto" src="/media/{{perfil.foto_perfil}}" alt="">
+                                <a href="{% if request.user.perfil.usuario and request.user.username %}{% url 'ver-perfil' request.user.username %}{% endif %}">
+                                    {% if request.user.perfil.foto_perfil %}
+                                        <img class="perfil-foto" src="/media/{{request.user.perfil.foto_perfil}}" alt="">
                                     {% else %}
-                                        <img id="perfil-foto" src="{% static 'img/perfil-generico.png' %}" alt="">
+                                        <img class="perfil-foto" src="{% static 'img/perfil-generico.png' %}" alt="">
                                     {% endif %}
-                                    <span>{{request.user}}</span>
+                                    <span>{{request.user.perfil.nome_completo}}</span>
                                 </a>
                                 </a>
                             </li>
@@ -108,94 +111,155 @@
     {% block main %}
     <div class="container-fluid" id="main-container">
         {% block content %}
-        <div id="posts-home">
-            <form action="" class="post-form">
-                <div class="input-field" id="add-publicacao-box">
-                    <a href="#"><img class="perfil-foto" src="{% static 'img/perfil-generico.png' %}" alt=""></a>
-                    <button class="add-publicacao">Clique para adicionar uma publicação</button>
-                </div>
-                <div id="tela-publicacao">
-                    <div id="publicacao-header">
-                        <div id="user-box">
-                            <a href="#"><img class="perfil-foto" src="{% static 'img/perfil-generico.png' %}" alt=""></a>
-                            <span>{{request.user}}</span>
-                        </div>
-                        <div id="privacidade-publicacao">
-                            <div id="opcao_escolhida">
-                                <div>
-                                    <i id="publico-icone" class="fa-solid fa-earth-americas icones-select"></i>
-                                    Para o Público
-                                </div> 
-                                <i class="fa-solid fa-caret-down"></i>
-                            </div>
-                            <ul class="privacidade_options">
-                                <li data-value="opcao1" class="options">
-                                    <i id="publico-icone" class="fa-solid fa-earth-americas icones-select"></i>
-                                    Para o Público
-                                </li>
-                                <li data-value="opcao2" class="options">
-                                    <i id="conexoes-icone" class="fa-solid fa-user-group icones-select"></i>
-                                    Minhas Conexões
-                                </li>
-                                <li data-value="opcao3" class="options">
-                                    <i id="privado-icone" class="fa-solid fa-lock icones-select"></i>
-                                    Apenas para Mim
-                                </li>
-                            </ul>
-                        </div>
-                            <input type="hidden" name="opcao_selecionada" id="opcao-selecionada">                          
-                    </div>
-                    <input type="text" placeholder="Escreva aqui...">
-                </div>
-                <div class="input-field">
-                    <label for="foto-publicacao">
-                        <i class="fa-solid fa-image"></i>
-                        <span>Foto</span>
-                        <input type="file" accept="image/jpeg, image/jpg, image/png" class="file" id="foto-publicacao">
-                    </label>
-                    <label for="video-publicacao">
-                        <i class="fa-solid fa-video"></i> <span>Vídeo</span>
-                        <input type="file" accept="video/*" class="file" id="video-publicacao">
-                    </label>
-                        <!-- <i id="publico-icone" class="fa-solid fa-earth-americas icones-select"></i>
-                        <i id="conexoes-icone" class="fa-solid fa-user-group icones-select"></i>
-                        <i id="privado-icone" class="fa-solid fa-lock icones-select"></i>
-                        <select name="" id="privacidade-publicacao">
-                            <option value="Público" selected>Para o Público</option>
-                            <option value="Conexoes">Minhas Conexões</option>
-                            <option value="Privado">Apenas para Mim</option>
-                        </select> -->
-                    <label for="">
-                        <i class="fa-solid fa-align-left"></i>
-                        <span>Aa</span>
-                    </label>
-                </div>
-                <div class="input-field">
-                    <button type="submit" id="btn-publicar">Publicar</button>
-                </div>
-            </form>
-        </div>
+            {% include 'paginas/publicacao.html' %}
         {% endblock %}
     </div>
     {% endblock %}
-</main>
 
+    <div id="chat-box">
+        <div id="chat-head">
+            <div id="chat-head-box">
+                {% if perfil.foto_perfil %}
+                    <img class="perfil-foto" src="/media/{{perfil.foto_perfil}}" alt="">
+                {% else %}
+                    <img class="perfil-foto" src="{% static 'img/perfil-generico.png' %}" alt="">
+                {% endif %}
+                <span>{{perfil.nome_completo}}</span>
+                <button type="button" id="chat-close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        </div>
+        <div id="chat-body">
+            <ul class="messages-container">
+                <li class="messages received-by-me">
+                    <img class="photo-user" src="/media/{{perfil.foto_perfil}}" alt="">
+                    <div class="message-time-box">
+                        <div class="message-ballon">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid saepe commodi eaque ab minus perferendis numquam, error iure alias, tempora deleniti id vel harum quasi impedit ex, soluta incidunt eum!
+                        </div>
+                        <div class="date-time-box">
+                            <span class="date-message">15/09/2023</span>
+                            <span class="time-message">17:12</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="messages sent-by-me">
+                    <div class="message-time-box">
+                        <div class="message-ballon">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid saepe commodi eaque ab minus perferendis numquam, error iure alias, tempora deleniti id vel harum quasi impedit ex, soluta incidunt eum!
+                        </div>
+                        <div class="date-time-box">
+                            <span class="date-message">15/09/2023</span>
+                            <span class="time-message">17:12</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="messages received-by-me">
+                    <img class="photo-user" src="/media/{{perfil.foto_perfil}}" alt="">
+                    <div class="message-time-box">
+                        <div class="message-ballon">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        </div>
+                        <div class="date-time-box">
+                            <span class="date-message">25/10/2023</span>
+                            <span class="time-message">09:37</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="messages sent-by-me">
+                    <div class="message-time-box">
+                        <div class="message-ballon">
+                            Lorem ipsum dolor sit amet.
+                        </div>
+                        <div class="date-time-box">
+                            <span class="date-message">25/10/2023</span>
+                            <span class="time-message">09:42</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="messages sent-by-me">
+                    <div class="message-time-box">
+                        <div class="message-ballon">
+                            Adipisicing elit
+                        </div>
+                        <div class="date-time-box">
+                            <span class="date-message">25/10/2023</span>
+                            <span class="time-message">09:42</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="messages received-by-me">
+                    <img class="photo-user" src="/media/{{perfil.foto_perfil}}" alt="">
+                    <div class="message-time-box">
+                        <div class="message-ballon">
+                            Animi facere sit fugiat aperiam qui voluptatum laudantium in.
+                        </div>
+                        <div class="date-time-box">
+                            <span class="date-message">25/10/2023</span>
+                            <span class="time-message">09:44</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div id="chat-footer">
+            <form id="form-message">
+                {% csrf_token %}
+                <div id="text-message-container">
+                    <div id="text-message-box">
+                        <label for="message-field" id="message-label">Escreva aqui sua mensagem</label>
+                        <textarea autocomplete="off" name="message" id="message-field"></textarea>
+                        <button type="button" class="btn-chat" id="btn-face-smile">
+                            <i class="fa-solid fa-face-smile"></i>
+                        </button>
+                    </div>
+                    <input type="hidden" name="receive" value="{{ perfil.usuario.id }}" id="receive">
+                    <div>
+                        
+                    </div>
+                    <button type="button" class="btn-chat" id="btn-send">
+                        <?xml version="1.0" ?><svg class="send-icon" style="enable-background:new 0 0 24 24;" version="1.1" viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="info"/><g id="icons"><path d="M21.5,11.1l-17.9-9C2.7,1.7,1.7,2.5,2.1,3.4l2.5,6.7L16,12L4.6,13.9l-2.5,6.7c-0.3,0.9,0.6,1.7,1.5,1.2l17.9-9   C22.2,12.5,22.2,11.5,21.5,11.1z" id="send"/></g></svg>
+                    </button>
+                </div>
+                <!-- <button class="btn-chat" id="btn-plus">
+                    <div id="plus-box">
+                        <i class="fa-solid fa-plus"></i>
+                    </div>
+                </button> -->
+                <!-- <div id="chat-btn-box">
+                    <label class="btn-chat">
+                        <i class="fa-regular fa-image"></i>
+                    </label>
+                    <label class="btn-chat">
+                        <i class="fa-solid fa-paperclip"></i>
+                    </label>
+                </div> -->
+            </form>
+        </div>
+    </div>
+</main>o
 {% block footer %}
 <footer>
     <div class="col-12" id="copyright">
-        <p>&copy; 2023 Copyright ConectSong</p>
+        <p>&copy; 2023 Copyright ConnectSong</p>
     </div>
 </footer>
 {% endblock %}
 
+<script>
+    var usuario_atual = '{{ request.user.id }}';
+</script>
 
 <!-- Scripts -->
 <script src="{% static 'js/jquery-3.7.0.min.js' %}"></script>
 <script src="{% static 'js/popper.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/fontawesome.js' %}"></script>
-<script src="{% static 'js/scripts.js' %}"></script>
 <script src="{% static 'js/jquery.mask.min.js' %}"></script>
+
+<script src="{% static 'js/scripts.js' %}"></script>
+<script src="{% static 'js/chat.js' %}"></script>
 
 {% block scripts %}
     <script src="{% static 'js/inicio.js' %}"></script>

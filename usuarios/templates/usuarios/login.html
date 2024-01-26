@@ -4,6 +4,9 @@
 
 {% block styles %}
     <link rel="stylesheet" href="{% static 'css/form.css' %}">
+    <style>
+    
+    </style>
 {% endblock %}
 
 {% block content %}
@@ -19,7 +22,7 @@
             {% csrf_token %}
 
             <div class="input-field">
-                <label for="{{ form.username.id_for_label }}">Usuário</label>
+                <label for="{{ form.username.id_for_label }}">Email</label>
                 {{ form.username }}
             </div>
 
