@@ -1,0 +1,149 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+
+    <link rel="stylesheet" href="{% static 'css/chat.css' %}">
+</head>
+<body>
+
+    <div id="chat-box">
+        <div id="chat-head">
+            <div id="chat-head-box">
+                {% if perfil.foto_perfil %}
+                    <img class="perfil-foto" src="/media/{{perfil.foto_perfil}}" alt="">
+                {% else %}
+                    <img class="perfil-foto" src="{% static 'img/perfil-generico.png' %}" alt="">
+                {% endif %}
+                <span>{{perfil.nome_completo}}</span>
+                <button type="button" id="chat-close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        </div>
+        <div id="chat-body">
+            <ul class="messages-container">
+                <li class="messages received-by-me">
+                    {% if perfil.foto_perfil %}
+                        <img class="photo-user" src="/media/{{perfil.foto_perfil}}" alt="">
+                    {% else %}
+                        <img class="photo-user" src="{% static 'img/perfil-generico.png' %}" alt="">
+                    {% endif %}
+                    <div class="message-time-box">
+                        <div class="message-ballon">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid saepe commodi eaque ab minus perferendis numquam, error iure alias, tempora deleniti id vel harum quasi impedit ex, soluta incidunt eum!
+                        </div>
+                        <div class="date-time-box">
+                            <span class="date-message">15/09/2023</span>
+                            <span class="time-message">17:12</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="messages sent-by-me">
+                    <div class="message-time-box">
+                        <div class="message-ballon">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid saepe commodi eaque ab minus perferendis numquam, error iure alias, tempora deleniti id vel harum quasi impedit ex, soluta incidunt eum!
+                        </div>
+                        <div class="date-time-box">
+                            <span class="date-message">15/09/2023</span>
+                            <span class="time-message">17:12</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="messages received-by-me">
+                    {% if perfil.foto_perfil %}
+                        <img class="photo-user" src="/media/{{perfil.foto_perfil}}" alt="">
+                    {% else %}
+                        <img class="photo-user" src="{% static 'img/perfil-generico.png' %}" alt="">
+                    {% endif %}
+                    <div class="message-time-box">
+                        <div class="message-ballon">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        </div>
+                        <div class="date-time-box">
+                            <span class="date-message">25/10/2023</span>
+                            <span class="time-message">09:37</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="messages sent-by-me">
+                    <div class="message-time-box">
+                        <div class="message-ballon">
+                            Lorem ipsum dolor sit amet.
+                        </div>
+                        <div class="date-time-box">
+                            <span class="date-message">25/10/2023</span>
+                            <span class="time-message">09:42</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="messages sent-by-me">
+                    <div class="message-time-box">
+                        <div class="message-ballon">
+                            Adipisicing elit
+                        </div>
+                        <div class="date-time-box">
+                            <span class="date-message">25/10/2023</span>
+                            <span class="time-message">09:42</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="messages received-by-me">
+                    {% if perfil.foto_perfil %}
+                        <img class="photo-user" src="/media/{{perfil.foto_perfil}}" alt="">
+                    {% else %}
+                        <img class="photo-user" src="{% static 'img/perfil-generico.png' %}" alt="">
+                    {% endif %}
+                    <div class="message-time-box">
+                        <div class="message-ballon">
+                            Animi facere sit fugiat aperiam qui voluptatum laudantium in.
+                        </div>
+                        <div class="date-time-box">
+                            <span class="date-message">25/10/2023</span>
+                            <span class="time-message">09:44</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div id="chat-footer">
+            <form id="form-message">
+                {% csrf_token %}
+                <div id="text-message-container">
+                    <div id="text-message-box">
+                        <label for="message-field" id="message-label">Escreva aqui sua mensagem</label>
+                        <textarea autocomplete="off" name="message" id="message-field"></textarea>
+                        <button type="button" class="btn-chat" id="btn-face-smile">
+                            <i class="fa-solid fa-face-smile"></i>
+                        </button>
+                    </div>
+                    <input type="hidden" name="receive" value="{{ perfil.usuario.id }}" id="receive">
+                    <div>
+                        
+                    </div>
+                    <button type="button" class="btn-chat" id="btn-send">
+                        <?xml version="1.0" ?><svg class="send-icon" style="enable-background:new 0 0 24 24;" version="1.1" viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="info"/><g id="icons"><path d="M21.5,11.1l-17.9-9C2.7,1.7,1.7,2.5,2.1,3.4l2.5,6.7L16,12L4.6,13.9l-2.5,6.7c-0.3,0.9,0.6,1.7,1.5,1.2l17.9-9   C22.2,12.5,22.2,11.5,21.5,11.1z" id="send"/></g></svg>
+                    </button>
+                </div>
+                <!-- <button class="btn-chat" id="btn-plus">
+                    <div id="plus-box">
+                        <i class="fa-solid fa-plus"></i>
+                    </div>
+                </button> -->
+                <!-- <div id="chat-btn-box">
+                    <label class="btn-chat">
+                        <i class="fa-regular fa-image"></i>
+                    </label>
+                    <label class="btn-chat">
+                        <i class="fa-solid fa-paperclip"></i>
+                    </label>
+                </div> -->
+            </form>
+        </div>
+    </div>
+</body>
+</html>

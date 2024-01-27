@@ -28,8 +28,11 @@
                     </label>
                     {% endif %}
                     <div class="button-box-save-cancel" id="box-save-cancel-cover">
-                        <button type="submit" class="btn-default btn-form">Salvar Alteração</button>
-                        <button type="button" class="btn-default btn-form" id="descard-cover">Descartar</button>
+                        <p>Deseja salvar a nova foto de capa?</p>
+                        <div class="btn-box">
+                            <button type="submit" class="btn-default btn-form">Salvar Alteração</button>
+                            <button type="button" class="btn-default btn-form" id="discard-cover">Descartar</button>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -46,8 +49,11 @@
                     <input type="hidden" name="id-perfil" value="{{perfil.id}}">
                 </div>
                 <div class="button-box-save-cancel" id="box-save-cancel-profile">
-                    <button type="submit" class="btn-default btn-form">Salvar Foto</button>
-                    <button type="button" class="btn-default btn-form" id="discard-profile">Descartar</button>
+                    <p>Deseja salvar a nova foto de perfil?</p>
+                    <div class="btn-box">
+                        <button type="submit" class="btn-default btn-form">Salvar Alteração</button>
+                        <button type="button" class="btn-default btn-form" id="discard-profile">Descartar</button>
+                    </div>
                 </div>
                 {% if perfil.usuario == request.user %}
                 <label for="photo-profile-input" id="photo-profile-icon-edit">
@@ -105,7 +111,7 @@
                                 </button>
                             </form>
                         {% endif %}
-                        <button class="btn-default btn-message">
+                        <button class="btn-default btn-message" id="send-message">
                             <i class="fa-regular fa-envelope"></i>
                             Mensagem
                         </button>
@@ -170,10 +176,10 @@
                     var reader = new FileReader();
 
                     reader.onload = function(e) {
-                        $('#photo-cover').attr('src', e.target.result);
+                        $('.photo-cover').attr('src', e.target.result);
                     };
                     reader.readAsDataURL(input.files[0]);
-                    $('#box-save-cancel-cover').css('display', 'flex');
+                    $('#box-save-cancel-cover').css('display', 'block');
                 }
             });
 
@@ -191,7 +197,7 @@
                         $('.photo-profile').attr('src', e.target.result);
                     };
                     reader.readAsDataURL(input.files[0]);
-                    $('#box-save-cancel-profile').css('display', 'flex');
+                    $('#box-save-cancel-profile').css('display', 'block');
                 }
             });
 

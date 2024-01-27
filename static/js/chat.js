@@ -7,11 +7,10 @@ $(document).ready(function () {
 
     console.log('Usuário atual ' + usuario_atual)
 
-    $('#chat-body').css('height', 'calc(100% - (56px + ' + chat_footer_altura + 'px))');
-    $('#chat-body').scrollTop($('#chat-body').prop("scrollHeight"));
-
     $('#send-message').click(function() {
         $('#chat-box').css('display', 'block');
+        $('#chat-body').css('height', 'calc(100% - ' + chat_footer_altura + 'px)');
+        $('#chat-body').scrollTop($('#chat-body').prop("scrollHeight"));
     });
 
     $('#chat-close').click(function() {
@@ -37,7 +36,7 @@ $(document).ready(function () {
             textarea.css('overflow-y', 'hidden');
         }
         chat_footer_altura = $('#chat-footer').height();
-        $('#chat-body').css('height', 'calc(100% - (56px + ' + chat_footer_altura + 'px))');
+        $('#chat-body').css('height', 'calc(100% - ' + chat_footer_altura + 'px)');
 
         var conteudo = $('#chat-body')[0];
         conteudo.scrollTop = conteudo.scrollHeight;
@@ -62,29 +61,33 @@ $(document).ready(function () {
 
     // Função para renderizar as mensagens no formato HTML
     function renderizarMensagem(mensagem) {
-        var mensagemHTML = "<li class='messages";
+        var mensagemHTML = '<li class="messages';
 
         // Adiciona a classe de acordo com o remetente
         if (mensagem.enviou_id === usuario_atual) {
-            mensagemHTML += " sent-by-me'>";
+            mensagemHTML += ' sent-by-me">';
         } else {
-            mensagemHTML += " received-by-me'>";
+            mensagemHTML += ' received-by-me">';
         }
 
         // Adiciona a foto do perfil
-        mensagemHTML += "<img class='photo-user' src='" + mensagem.enviou_foto + "' alt='Foto do Perfil'>";
+        if (mensagem.enviou_foto) {
+            mensagemHTML += '<img class="photo-user" src="' + mensagem.enviou_foto + '" alt="Foto do Perfil">';
+        } else {
+            mensagemHTML += '<img src="../static/img/perfil-generico.png" alt="">';
+        }
 
-        mensagemHTML += "<div class='message-time-box'>";
-        mensagemHTML += "<div class='message-ballon'>";
+        mensagemHTML += '<div class="message-time-box">';
+        mensagemHTML += '<div class="message-ballon">';
         mensagemHTML += mensagem.message;
-        mensagemHTML += "</div>";
+        mensagemHTML += '</div>';
 
-        mensagemHTML += "<div class='date-time-box'>";
-        mensagemHTML += "<span class='date-message'>" + mensagem.data + "</span> &nbsp;";
-        mensagemHTML += "<span class='time-message'>" + mensagem.hora + "</span>";
-        mensagemHTML += "</div>";
+        mensagemHTML += '<div class="date-time-box">';
+        mensagemHTML += '<span class="date-message">' + mensagem.data + '</span> &nbsp;';
+        mensagemHTML += '<span class="time-message">' + mensagem.hora + '</span>';
+        mensagemHTML += '</div>';
 
-        mensagemHTML += "</div></li>";
+        mensagemHTML += '</div></li>';
 
         return mensagemHTML;
     }
