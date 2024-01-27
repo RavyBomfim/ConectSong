@@ -1,3 +1,3 @@
 # ConectSong
-### Projeto de Rede Social voltada para Músicos
+### Projeto de Rede Social para Músicos
  
