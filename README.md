@@ -1,6 +1,6 @@
 # ConectSong 
 
-<div> style="display: flex;"
+<div style="display: flex;">
 
  <img src="![ConectSong-logo](https://github.com/RavyBomfim/ConectSong/assets/87732549/b47d00aa-7cb2-4b8e-b89a-d61a65a705ef)" />
  
