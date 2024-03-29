@@ -95,11 +95,6 @@
                         <li id="login-option"><a href="{% url 'login' %}">Login</a></li>
                     {% endif %}
                 </ul>
-                <!-- <div id="box-menu">
-                    <img src="{% static 'img/perfil-generico.png' %}" alt="">
-                    <span>{{ request.user }}</span>
-                </div> -->
-                
             </div>
         </nav>
     </header>
@@ -109,7 +104,10 @@
     {% block main %}
     <div class="container-fluid" id="main-container">
         {% block content %}
-            {% include 'paginas/publicacao.html' %}
+            <div id="container-posts">
+                {% include 'paginas/publicar.html' %}
+                {% include 'paginas/publicacoes.html' %}
+            </div>
         {% endblock %}
     </div>
     {% endblock %}

@@ -35,9 +35,23 @@ class VerPerfil(LoginRequiredMixin, TemplateView):
             (Q(enviou_solicitacao=perfil.usuario) & Q(recebeu_solicitacao=self.request.user))
         ).first()
 
+        conexoes = Conexao.objects.filter((Q(enviou_solicitacao=perfil.usuario) | Q(recebeu_solicitacao=perfil.usuario)) & Q(status=True))[:6]
+
+        connections = []
+
+        for connect in conexoes: 
+            if connect.enviou_solicitacao != perfil.usuario:
+                connection = connect.enviou_solicitacao
+            else:
+                connection = connect.recebeu_solicitacao
+
+            connections.append(connection.perfil)
+
         context['perfil'] = perfil
         context['conexao'] = conexao
         context['posts'] = Post.objects.filter(usuario=user)
+        context['connections'] = connections
+        context['qtd_connections'] = conexoes.count()
         
         return context
     

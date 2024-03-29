@@ -426,6 +426,12 @@ input:-webkit-autofill:active{
     line-height: 22px;
 }
 
+#container-posts {
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+} 
+
 footer {
     display: none;
     border-top: 1px solid #282929;

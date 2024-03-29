@@ -123,7 +123,7 @@
         <div id="main-profile">
             <div id="container-lateral">
                 <div id="container-informs-profile">
-                    <div id="title-informs-box">
+                    <div class="title-informs-box">
                         <h4 class="title-informs">Sobre</h4>
                         <button class="btn-default">
                             <i class="fa fa-pencil"></i>
@@ -145,17 +145,51 @@
 
                         {% if not perfil.cidade and not perfil.descricao %}
                             <div>
-                                Sem informações adiocionais.
+                                Sem informações adiocionais
                             </div>
                         {% endif %}
                     </div>
                 </div>
-                <div id="container-conexions">
-
+                <div id="container-connections">
+                    <div class="title-informs-box">
+                        <h4 class="title-informs">Conexões</h4>
+                        <div class="qtd-connections">{{qtd_connections}}</div>
+                    </div>
+                    <div id="some-connections">
+                        {% if connections %}
+                            {% for connection in connections %}
+                                <div class="connection-preview">
+                                    {% if connection.foto_perfil %}
+                                        <img src="/media/{{connection.foto_perfil}}"> 
+                                    {% else %}
+                                        <img src="{% static 'img/perfil-generico.png' %}">
+                                    {% endif %}
+                                    <p>{{connection.nome_completo}}</p>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div>
+                                Ainda não há conexões
+                            </div>
+                        {% endif %}
+                    </div>
+                    <a href="#" id="see-all-connections">Ver todas as conexões</a>
                 </div>
             </div>
-            <div id="container-publicacoes">
-                {% include 'paginas/publicacao.html' %}
+            <div id="container-posts">
+                {% if perfil.usuario == request.user %}
+                    {% include 'paginas/publicar.html' %}
+                {% endif %}
+
+                {% if posts %}
+                    {% include 'paginas/publicacoes.html' %}
+                {% else %}
+                    <div id="no-posts">
+                        <h4>
+                            Ainda não há publicações
+                        </h4>
+                    </div>
+                {% endif %}
             </div>
         </div>
 

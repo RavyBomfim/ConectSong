@@ -1,0 +1,52 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ConnectSong</title>
+
+    <link rel="stylesheet" href="{% static 'css/publicacoes.css' %}">
+</head>
+<body>
+    <div id="publicacoes">
+        <div id="publish post">
+            <form action="{% url 'criar-publicacao' %}"  method="POST" enctype="multipart/form-data"  class="post-form" id="publicacao-form">
+                {% csrf_token %}
+                <div id="tela-publicacao">
+                    <div id="poster">
+                        <a href="{% if request.user.perfil.usuario and request.user.username %}{% url 'ver-perfil' request.user.username %}{% endif %}">
+                            {% if request.user.perfil.foto_perfil %}
+                                <img class="perfil-foto" src="/media/{{request.user.perfil.foto_perfil}}" alt="">
+                            {% else %}
+                                <img class="perfil-foto" src="{% static 'img/perfil-generico.png' %}" alt="">
+                            {% endif %}
+                        </a>
+                        <div class="label-box" id="labels-publicacao">
+                            <label for="id_imagem">
+                                <i class="fa-solid fa-image"></i>
+                                <span>Foto</span>
+                                <input type="file" accept="image/jpeg, image/jpg, image/png" class="file" name="imagem" id="id_imagem">
+                            </label>
+                            <label for="id_video">
+                                <i class="fa-solid fa-video"></i> <span>Vídeo</span>
+                                <input type="file" accept="video/*" name="video" class="file" id="id_video">
+                            </label>
+                            <label for="id_texto">
+                                <i class="fa-solid fa-align-left"></i>
+                                <span>Aa</span>
+                            </label>
+                        </div>
+                    </div>
+                    <button class="btn btn-default" type="submit" id="btn-publicar">Publicar</button>
+                </div>
+                <textarea name="texto" id="id_texto" placeholder="Escreva sua publicação aqui..."></textarea>
+                <div id="fotos-videos-box">
+                    <img src="" alt="" id="inserir-imagem">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

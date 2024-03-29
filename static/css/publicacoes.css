@@ -4,13 +4,12 @@
     justify-content: center;
 } 
 
-#posts-home {
+#publish-post {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-self: center;
     gap: 20px;
-    width: 550px;
     margin-block: 17px;
     margin-inline: auto;
 }
